@@ -1,0 +1,63 @@
+[gd_scene load_steps=4 format=3 uid="uid://b5ik00kf5k75r"]
+
+[ext_resource type="Script" uid="uid://c7aiql8035it4" path="res://src/ui/console.gd" id="1_ulse6"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dyihf"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="Theme" id="Theme_itxkh"]
+default_font_size = 30
+LineEdit/styles/focus = SubResource("StyleBoxFlat_dyihf")
+
+[node name="console" type="Control" node_paths=PackedStringArray("rich_text", "edit", "shell_prompt_label")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_itxkh")
+script = ExtResource("1_ulse6")
+rich_text = NodePath("ColorRect/VBoxContainer/RichTextLabel")
+edit = NodePath("ColorRect/VBoxContainer/HBoxContainer/LineEdit")
+shell_prompt_label = NodePath("ColorRect/VBoxContainer/HBoxContainer/shell prompt")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.136826, 0.136826, 0.136826, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="ColorRect/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+scroll_following = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ColorRect/VBoxContainer"]
+layout_mode = 2
+
+[node name="shell prompt" type="Label" parent="ColorRect/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "user@aos: ~$ "
+
+[node name="LineEdit" type="LineEdit" parent="ColorRect/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = ">"
+keep_editing_on_text_submit = true
+flat = true
+
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
+[connection signal="text_submitted" from="ColorRect/VBoxContainer/HBoxContainer/LineEdit" to="." method="_on_line_edit_text_submitted"]

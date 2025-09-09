@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://dmohmagjf0uf8"]
+
+[ext_resource type="Script" uid="uid://dpky778b6olto" path="res://src/player/player.gd" id="1_4anbu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ot50s"]
+size = Vector2(30, 30)
+
+[sub_resource type="Gradient" id="Gradient_4sirb"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_5s1lf"]
+gradient = SubResource("Gradient_4sirb")
+width = 32
+height = 32
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="CharacterBody2D" type="CharacterBody2D" node_paths=PackedStringArray("direction_ray")]
+script = ExtResource("1_4anbu")
+direction_ray = NodePath("direction_ray")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ot50s")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("GradientTexture2D_5s1lf")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="direction_ray" type="RayCast2D" parent="."]

@@ -1,0 +1,164 @@
+[gd_scene load_steps=9 format=3 uid="uid://betepf3ce3px4"]
+
+[ext_resource type="Script" uid="uid://c4is602roniff" path="res://src/main.gd" id="1_eewff"]
+[ext_resource type="PackedScene" uid="uid://bpq3dqs2ajlvx" path="res://src/maps/start.tscn" id="2_fyndt"]
+[ext_resource type="PackedScene" uid="uid://b5ik00kf5k75r" path="res://src/ui/console.tscn" id="3_5q4o7"]
+[ext_resource type="Script" uid="uid://dlndo2i23jfa" path="res://src/ui/console_start.gd" id="4_3cfgd"]
+[ext_resource type="Script" uid="uid://ceyj8dtce4uhi" path="res://src/ui/ui.gd" id="4_fyndt"]
+
+[sub_resource type="Animation" id="Animation_fyndt"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("main menu/NinePatchRect:patch_margin_top")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("main menu/ScrollContainer/VBoxContainer:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_3cfgd"]
+resource_name = "show_ui"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("main menu/NinePatchRect:patch_margin_top")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0, 145]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("main menu/ScrollContainer/VBoxContainer:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kmhfv"]
+_data = {
+&"RESET": SubResource("Animation_fyndt"),
+&"show_ui": SubResource("Animation_3cfgd")
+}
+
+[node name="Main" type="Node"]
+script = ExtResource("1_eewff")
+worlds = Array[PackedScene]([ExtResource("2_fyndt")])
+metadata/_custom_type_script = "uid://c4is602roniff"
+
+[node name="GUILayer" type="CanvasLayer" parent="."]
+
+[node name="console" parent="GUILayer" instance=ExtResource("3_5q4o7")]
+visible = false
+script = ExtResource("4_3cfgd")
+
+[node name="UI" type="Control" parent="GUILayer" node_paths=PackedStringArray("ui_animations", "sfx_spin_box", "music_spin_box", "start_button", "exit_button")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_fyndt")
+ui_animations = NodePath("AnimationPlayer")
+sfx_spin_box = NodePath("main menu/ScrollContainer/VBoxContainer/GridContainer/sfx_SpinBox2")
+music_spin_box = NodePath("main menu/ScrollContainer/VBoxContainer/GridContainer/music_SpinBox")
+start_button = NodePath("main menu/ScrollContainer/VBoxContainer/start")
+exit_button = NodePath("main menu/ScrollContainer/VBoxContainer/exit")
+
+[node name="main menu" type="PanelContainer" parent="GUILayer/UI"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -22.0
+offset_right = 23.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="GUILayer/UI/main menu"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GUILayer/UI/main menu/ScrollContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="start" type="Button" parent="GUILayer/UI/main menu/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "start"
+
+[node name="exit" type="Button" parent="GUILayer/UI/main menu/ScrollContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+text = "exit"
+
+[node name="settings" type="Button" parent="GUILayer/UI/main menu/ScrollContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 4
+text = "settings"
+
+[node name="HSeparator" type="HSeparator" parent="GUILayer/UI/main menu/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="GUILayer/UI/main menu/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+columns = 2
+
+[node name="Label" type="Label" parent="GUILayer/UI/main menu/ScrollContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "music"
+
+[node name="music_SpinBox" type="SpinBox" parent="GUILayer/UI/main menu/ScrollContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="GUILayer/UI/main menu/ScrollContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "sfx"
+
+[node name="sfx_SpinBox2" type="SpinBox" parent="GUILayer/UI/main menu/ScrollContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="GUILayer/UI/main menu"]
+layout_mode = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="GUILayer/UI"]
+libraries = {
+&"": SubResource("AnimationLibrary_kmhfv")
+}
+speed_scale = 5.0
