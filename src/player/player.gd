@@ -8,6 +8,8 @@ extends CharacterBody2D
 @export var bias: int = 16
 
 @onready var next_tile_cords: Vector2 = round(position / bias) * bias
+var old_direction:Vector2
+var input_queue:Vector2 = Vector2.ZERO
 
 @onready var tween: Tween
 
@@ -21,11 +23,19 @@ func _physics_process(delta: float) -> void:
 
 	if Vector2i(position) != Vector2i(next_tile_cords):
 		move_character()
+		
+		if direction != Vector2.ZERO:
+			if old_direction != direction:
+				input_queue = direction
 		return
-
+	if input_queue != Vector2.ZERO:
+		direction = input_queue
+		input_queue = Vector2.ZERO
 	if direction == Vector2.ZERO:
 		return
-
+	
+	old_direction = direction
+	
 	var target_position = position + direction * cell_size
 
 	if not is_blocked(direction):

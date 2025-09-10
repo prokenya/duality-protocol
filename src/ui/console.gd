@@ -24,6 +24,7 @@ func _on_line_edit_text_submitted(new_text: String) -> void:
 
 
 func _on_visibility_changed() -> void:
+	if !is_inside_tree():return
 	if visible:
 		edit.grab_focus()
 	else:edit.release_focus()
