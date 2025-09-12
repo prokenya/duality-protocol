@@ -1,0 +1,11 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://oe7fmx36qecf"]
+
+[ext_resource type="FontFile" uid="uid://t1aylu88kvpi" path="res://assets/font/PixeloidSans.ttf" id="1_l82kg"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dyihf"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[resource]
+default_font = ExtResource("1_l82kg")
+default_font_size = 30
+LineEdit/styles/focus = SubResource("StyleBoxFlat_dyihf")

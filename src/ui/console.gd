@@ -1,30 +1,35 @@
-@tool
-extends Control
 class_name Console
+extends Control
 
-@export var rich_text:RichTextLabel
-@export var edit:LineEdit
-@export var shell_prompt_label:Label
+signal exit
 
-@export var shell_prompt:String = "user@aos: ~$ ":
-	set(value):
-		shell_prompt = value
-		shell_prompt_label.text = value
-	get(): return shell_prompt
+@export var exit_button: TextureButton
+@export var rich_text: RichTextLabel
+@export var edit: LineEdit
+@export var shell_prompt_label: Label
+
+@export var shell_prompt: String = "@aos: ~$ "
 
 func _ready() -> void:
 	_on_visibility_changed()
 
-func push_text(text:String):
+	exit_button.button_up.connect(func(): exit.emit())
+	edit.text_submitted.connect(_on_line_edit_text_submitted)
+
+	shell_prompt_label.text = G.data.user_name + shell_prompt
+	
+
+func push_text(shell_prompt: String, text: String):
 	rich_text.text += shell_prompt + text + "\n"
 
+
 func _on_line_edit_text_submitted(new_text: String) -> void:
-	push_text(new_text)
+	push_text(G.data.user_name + shell_prompt, new_text)
 	edit.text = ""
 
 
 func _on_visibility_changed() -> void:
-	if !is_inside_tree():return
+	if !is_inside_tree(): return
 	if visible:
 		edit.grab_focus()
-	else:edit.release_focus()
+	else: edit.release_focus()

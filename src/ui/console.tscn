@@ -1,26 +1,23 @@
 [gd_scene load_steps=4 format=3 uid="uid://b5ik00kf5k75r"]
 
-[ext_resource type="Script" uid="uid://c7aiql8035it4" path="res://src/ui/console.gd" id="1_ulse6"]
+[ext_resource type="Theme" uid="uid://oe7fmx36qecf" path="res://src/ui/theme.tres" id="1_dyihf"]
+[ext_resource type="Script" uid="uid://dfb7e2p4q6fdn" path="res://src/ui/console_with_agent.gd" id="2_itxkh"]
+[ext_resource type="Texture2D" uid="uid://b5mhwpew1hhbx" path="res://assets/sprites/X.png" id="3_itxkh"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dyihf"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
-
-[sub_resource type="Theme" id="Theme_itxkh"]
-default_font_size = 30
-LineEdit/styles/focus = SubResource("StyleBoxFlat_dyihf")
-
-[node name="console" type="Control" node_paths=PackedStringArray("rich_text", "edit", "shell_prompt_label")]
+[node name="console" type="Control" node_paths=PackedStringArray("exit_button", "rich_text", "edit", "shell_prompt_label")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = SubResource("Theme_itxkh")
-script = ExtResource("1_ulse6")
+theme = ExtResource("1_dyihf")
+script = ExtResource("2_itxkh")
+exit_button = NodePath("ColorRect/VBoxContainer/panel/HBoxContainer/exit")
 rich_text = NodePath("ColorRect/VBoxContainer/RichTextLabel")
 edit = NodePath("ColorRect/VBoxContainer/HBoxContainer/LineEdit")
 shell_prompt_label = NodePath("ColorRect/VBoxContainer/HBoxContainer/shell prompt")
+metadata/_custom_type_script = "uid://c7aiql8035it4"
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
@@ -29,6 +26,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_vertical = 3
 color = Color(0.136826, 0.136826, 0.136826, 1)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ColorRect"]
@@ -38,6 +36,19 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="panel" type="PanelContainer" parent="ColorRect/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+size_flags_stretch_ratio = 0.1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ColorRect/VBoxContainer/panel"]
+layout_mode = 2
+alignment = 2
+
+[node name="exit" type="TextureButton" parent="ColorRect/VBoxContainer/panel/HBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("3_itxkh")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="ColorRect/VBoxContainer"]
 layout_mode = 2
@@ -60,4 +71,3 @@ keep_editing_on_text_submit = true
 flat = true
 
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
-[connection signal="text_submitted" from="ColorRect/VBoxContainer/HBoxContainer/LineEdit" to="." method="_on_line_edit_text_submitted"]

@@ -4,6 +4,8 @@ extends Resource
 @export_range(0, 1, .01) var sfx: float = 0.25
 @export_range(0, 1, .01) var music: float = 0.25
 
+@export var user_name:String = "user"
+
 func save() -> void:
 	ResourceSaver.save(self, "user://gamedata.tres")
 

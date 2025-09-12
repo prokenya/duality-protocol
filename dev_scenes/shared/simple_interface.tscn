@@ -10,7 +10,7 @@ font_size = 156
 [sub_resource type="LabelSettings" id="LabelSettings_wtujj"]
 font_size = 49
 
-[node name="Simple Interface" type="ColorRect" node_paths=PackedStringArray("button", "text", "thinking", "poke_button", "player2_stt")]
+[node name="Simple Interface" type="ColorRect" node_paths=PackedStringArray("button", "text", "chat", "thinking", "poke_button", "player2_stt")]
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
@@ -21,6 +21,7 @@ grow_vertical = 0
 script = ExtResource("1_6vno8")
 button = NodePath("Button")
 text = NodePath("TextEdit")
+chat = NodePath("Label")
 thinking = NodePath("Thinking Animation")
 poke_button = NodePath("Poke Button")
 player2_stt = NodePath("Player2STT")

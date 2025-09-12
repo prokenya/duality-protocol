@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=3 uid="uid://dl6328icx26uf"]
+
+[ext_resource type="Script" uid="uid://bmj6m7ogtgvux" path="res://src/objects/terminal.gd" id="1_8wsfc"]
+[ext_resource type="Texture2D" uid="uid://3t0br15ynh6c" path="res://assets/sprites/terminal.png" id="1_gufe0"]
+[ext_resource type="Theme" uid="uid://oe7fmx36qecf" path="res://src/ui/theme.tres" id="2_fuehm"]
+[ext_resource type="PackedScene" uid="uid://b5ik00kf5k75r" path="res://src/ui/console.tscn" id="10_wx8f6"]
+
+[node name="terminal" type="Node2D" node_paths=PackedStringArray("console", "screen")]
+script = ExtResource("1_8wsfc")
+console = NodePath("CanvasLayer/console")
+screen = NodePath("text")
+
+[node name="Terminal" type="Sprite2D" parent="."]
+texture = ExtResource("1_gufe0")
+
+[node name="text" type="Label" parent="."]
+offset_left = -27.0
+offset_top = -18.0
+offset_right = 27.0
+offset_bottom = 9.0
+theme = ExtResource("2_fuehm")
+theme_override_constants/line_spacing = -3
+theme_override_font_sizes/font_size = 9
+text = "~:"
+clip_text = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(-32, -48, -32, 48, 32, 48, 32, -48)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="console" parent="CanvasLayer" instance=ExtResource("10_wx8f6")]
+visible = false
+top_level = true
+size_flags_horizontal = 3
+size_flags_vertical = 3

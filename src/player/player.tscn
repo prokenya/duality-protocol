@@ -1,6 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://dmohmagjf0uf8"]
+[gd_scene load_steps=7 format=3 uid="uid://dmohmagjf0uf8"]
 
-[ext_resource type="Script" uid="uid://dpky778b6olto" path="res://src/player/player.gd" id="1_4anbu"]
+[ext_resource type="Script" uid="uid://cpxxsgyj4sci6" path="res://src/player/player.gd" id="1_4anbu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ot50s"]
 size = Vector2(30, 30)
@@ -14,9 +14,18 @@ height = 32
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
-[node name="CharacterBody2D" type="CharacterBody2D" node_paths=PackedStringArray("direction_ray")]
+[sub_resource type="Gradient" id="Gradient_4anbu"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_rxibo"]
+gradient = SubResource("Gradient_4anbu")
+width = 32
+height = 16
+
+[node name="CharacterBody2D" type="CharacterBody2D" node_paths=PackedStringArray("interaction_ray", "direction_ray")]
 script = ExtResource("1_4anbu")
+interaction_ray = NodePath("interaction_ray")
 direction_ray = NodePath("direction_ray")
+metadata/_custom_type_script = "uid://dpky778b6olto"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_ot50s")
@@ -28,3 +37,10 @@ texture = SubResource("GradientTexture2D_5s1lf")
 zoom = Vector2(3, 3)
 
 [node name="direction_ray" type="RayCast2D" parent="."]
+
+[node name="interaction_ray" type="RayCast2D" parent="."]
+target_position = Vector2(0, 32)
+
+[node name="Sprite2D" type="Sprite2D" parent="interaction_ray"]
+rotation = -1.57079
+texture = SubResource("GradientTexture2D_rxibo")

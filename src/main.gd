@@ -4,8 +4,27 @@ class_name Main
 @export var main_menu:PackedScene
 @export var worlds:Array[PackedScene]
 @export var world:Node
+
+@export var MainProgram:Player2AINPC
+
+@export var player:Player
 func  _ready() -> void:
 	G.main = self
+	G.data.user_name = get_username()
+	G.data.save()
+
+func get_username() -> String:
+	var output = []
+	
+	if OS.get_name() == "Windows":
+		OS.execute("cmd", ["/c", "echo %USERNAME%"], output)
+	else:
+		OS.execute("sh", ["-c", "echo $USER"], output)
+	
+	if output.size() > 0:
+		return output[0].strip_edges()
+	
+	return "user"
 
 func load_world(index:int = 0):
 	get_tree().paused = true
