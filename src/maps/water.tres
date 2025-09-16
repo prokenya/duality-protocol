@@ -1,0 +1,16 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://ccnwgg2r06vik"]
+
+[ext_resource type="Shader" uid="uid://bo4fnt3ly3irb" path="res://src/maps/voronoi_water.gdshader" id="1_8f4dg"]
+
+[resource]
+shader = ExtResource("1_8f4dg")
+shader_parameter/scale = 64.0
+shader_parameter/target_color = Color(0.301961, 0.701961, 1, 1)
+shader_parameter/dark_color = Color(0.000112542, 0, 0.278969, 1)
+shader_parameter/light_color = Color(3.56168e-06, 0.533181, 0.72431, 1)
+shader_parameter/shadow_color = Color(0, 0.689021, 0.64232, 1)
+shader_parameter/threshold = 1.0
+shader_parameter/softness = 1.0
+shader_parameter/camera_pos = Vector2(0, 0)
+shader_parameter/camera_zoom = Vector2(1, 1)
+shader_parameter/viewport_size = Vector2(640, 360)

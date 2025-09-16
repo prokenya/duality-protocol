@@ -1,11 +1,16 @@
 extends Node2D
 class_name World
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
 
+@export var shader_material: ShaderMaterial
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+func _process(_delta: float) -> void:
+	var cam := get_viewport().get_camera_2d()
+	if not cam or not shader_material:
+		return
+
+	var vp_size := get_viewport().get_visible_rect().size
+
+	shader_material.set_shader_parameter("camera_pos", cam.global_position)
+	shader_material.set_shader_parameter("camera_zoom", cam.zoom)
+	shader_material.set_shader_parameter("viewport_size", vp_size)

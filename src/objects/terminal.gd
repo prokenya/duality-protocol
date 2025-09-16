@@ -9,16 +9,15 @@ func _ready() -> void:
 	console.exit.connect(exit)
 	update_screen()
 
-func interact():
+func interact(initiator:Node):
 	if !in_use:
-		G.main.player.can_move = false
+		G.main.player.in_conversatin = true
 		console.show()
 		in_use = true
 
 func exit():
-	console.hide()
 	in_use = false
-	G.main.player.can_move = true
+	G.main.player.in_conversatin = false
 	update_screen()
 
 

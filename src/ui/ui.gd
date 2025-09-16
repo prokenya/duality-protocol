@@ -21,14 +21,15 @@ func _ready() -> void:
 	music_spin_box.value_changed.connect(_on_music_spin_box_value_changed)
 	sfx_spin_box.value_changed.connect(_on_sfx_spin_box_value_changed)
 	
-	swich_ui()
+	switch_ui()
 
 
 func _input(event: InputEvent) -> void:
+	if G.main.player and G.main.player.in_conversatin:return
 	if Input.is_action_just_pressed("Menu"):
-		swich_ui()
+		switch_ui()
 
-func swich_ui():
+func switch_ui():
 	if in_ui:
 		ui_animations.play_backwards("show_ui")
 	else:
@@ -40,7 +41,7 @@ func start_game():
 	start_button.visible = !start_button.visible
 	exit_button.show()
 	
-	if in_ui:swich_ui()
+	if in_ui:switch_ui()
 		
 
 

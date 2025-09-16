@@ -8,7 +8,8 @@ extends CharacterBody2D
 @export var bias: int = 16
 
 @onready var next_tile_cords: Vector2 = round(position / bias) * bias
-var old_direction:Vector2
+var direction:Vector2
+var direction_of_view:Vector2
 var input_queue:Vector2 = Vector2.ZERO
 
 @onready var tween: Tween
@@ -19,13 +20,12 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	var direction := Input.get_vector("left", "right", "up", "down").sign()
 
 	if Vector2i(position) != Vector2i(next_tile_cords):
 		move_character()
 		
 		if direction != Vector2.ZERO:
-			if old_direction != direction:
+			if direction_of_view != direction:
 				input_queue = direction
 		return
 	if input_queue != Vector2.ZERO:
@@ -34,7 +34,7 @@ func _physics_process(delta: float) -> void:
 	if direction == Vector2.ZERO:
 		return
 	
-	old_direction = direction
+	direction_of_view = direction
 	
 	var target_position = position + direction * cell_size
 
@@ -55,7 +55,7 @@ func _physics_process(delta: float) -> void:
 	
 
 func is_blocked(dir: Vector2) -> bool:
-	direction_ray.rotation = dir.angle() - PI / 2
+	direction_ray.target_position = dir * cell_size
 	direction_ray.force_raycast_update()
 	return direction_ray.is_colliding()
 

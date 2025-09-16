@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://betepf3ce3px4"]
+[gd_scene load_steps=22 format=3 uid="uid://betepf3ce3px4"]
 
 [ext_resource type="Script" uid="uid://c4is602roniff" path="res://src/main.gd" id="1_eewff"]
 [ext_resource type="PackedScene" uid="uid://bpq3dqs2ajlvx" path="res://src/maps/start.tscn" id="2_fyndt"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://bpvfdwoxmeah3" path="res://addons/player2/helpers/config/Player2AIChatConfig.gd" id="9_d3u4l"]
 [ext_resource type="Script" uid="uid://fpb2ysodtcuy" path="res://addons/player2/helpers/tool_call/ToolCallFunctionDefinition.gd" id="10_mlv6i"]
 [ext_resource type="Script" uid="uid://dt7mt3t7a08me" path="res://addons/player2/helpers/tool_call/ToolCallFunctionDefinitions.gd" id="11_tb146"]
+[ext_resource type="Script" uid="uid://bgkgr3imp5j4c" path="res://src/tool.gd" id="12_kqbth"]
 
 [sub_resource type="Animation" id="Animation_fyndt"]
 length = 0.001
@@ -124,11 +125,31 @@ tool_calls_choice = "Use a tool when deciding to complete a task. If you say you
 tool_calls_reply_message = "Got result from calling ${tool_call_name}: ${tool_call_reply}"
 tool_calls_message_optional_arg_description = "If you wish to say something while calling this function, populate this field with your speech. Leave string empty to not say anything/do it quietly. fill this with a description of your state."
 
+[sub_resource type="Resource" id="Resource_kqbth"]
+Resource = null
+resource_path = "res://src/main.tscn::Resource_kqbth"
+resource_scene_unique_id = "Resource_kqbth"
+script = ExtResource("10_mlv6i")
+name = "check_dualty_ptrotocol"
+enabled = true
+description = "checks check dualty ptrotocol status "
+
+[sub_resource type="Resource" id="Resource_srxbw"]
+Resource = null
+resource_path = "res://src/main.tscn::Resource_srxbw"
+resource_scene_unique_id = "Resource_srxbw"
+script = ExtResource("10_mlv6i")
+name = "set_user_name"
+enabled = true
+description = "sets user_name "
+
 [sub_resource type="Resource" id="Resource_sta5p"]
 Resource = null
 resource_path = "res://src/main.tscn::Resource_sta5p"
 script = ExtResource("11_tb146")
-definitions = Array[ExtResource("10_mlv6i")]([])
+definitions = Array[ExtResource("10_mlv6i")]([SubResource("Resource_srxbw"), SubResource("Resource_kqbth")])
+set_user_name = SubResource("Resource_srxbw")
+check_dualty_ptrotocol = SubResource("Resource_kqbth")
 
 [node name="Main" type="Node" node_paths=PackedStringArray("MainProgram")]
 script = ExtResource("1_eewff")
@@ -149,6 +170,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("4_fyndt")
 ui_animations = NodePath("AnimationPlayer")
 sfx_spin_box = NodePath("main menu/ScrollContainer/VBoxContainer/GridContainer/sfx_SpinBox2")
@@ -227,12 +249,18 @@ libraries = {
 }
 speed_scale = 5.0
 
-[node name="MainProgram" type="Node" parent="."]
+[node name="MainProgram" type="Node" parent="." node_paths=PackedStringArray("tool_calls_scan_node_for_functions")]
 script = ExtResource("6_uewes")
 character_name = "MainProgram"
-character_description = ""
-character_system_message = "Be direct with your replies."
+character_description = "The neural network, the main program that controls the entire complex in which it is located"
+character_system_message = "Be direct with your replies.
+communicates with users only through a duality protocol (the player contacts the neural network intermediary and it interprets what he wants and contacts the main program, the player cannot directly ask for anything except a name change
+you can use check_duality_protocol function to check who talk with you now user or ai intermediary for best answer"
 character_config = SubResource("Resource_e7lu8")
 chat_config = SubResource("Resource_okx7f")
+tool_calls_scan_node_for_functions = [NodePath("../Tool")]
 tool_calls_function_definitions = SubResource("Resource_sta5p")
 metadata/_custom_type_script = "uid://bupnh0kqklshe"
+
+[node name="Tool" type="Node" parent="."]
+script = ExtResource("12_kqbth")

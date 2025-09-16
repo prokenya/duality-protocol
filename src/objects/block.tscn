@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://heenh3uu2q5n"]
+
+[ext_resource type="Script" uid="uid://dtgsp16rpenqn" path="res://src/objects/block.gd" id="1_4n2vt"]
+[ext_resource type="Texture2D" uid="uid://bys7o4jlvca51" path="res://assets/sprites/blockt.png" id="1_ta7hf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d28yv"]
+size = Vector2(32, 32)
+
+[node name="StaticBody2D" type="AnimatableBody2D" node_paths=PackedStringArray("ray", "sprite")]
+input_pickable = true
+script = ExtResource("1_4n2vt")
+ray = NodePath("RayCast2D")
+sprite = NodePath("Sprite2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_d28yv")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(0, 32)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_ta7hf")
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]

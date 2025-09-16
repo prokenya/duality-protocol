@@ -6,11 +6,14 @@ class_name Main
 @export var world:Node
 
 @export var MainProgram:Player2AINPC
+@export var duality_protocol_status:bool = false
 
 @export var player:Player
 func  _ready() -> void:
 	G.main = self
-	G.data.user_name = get_username()
+	if G.data.first_run:
+		G.data.user_name = get_username()
+	G.data.first_run = false
 	G.data.save()
 
 func get_username() -> String:
