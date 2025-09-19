@@ -93,6 +93,18 @@ texture_region_size = Vector2i(32, 32)
 3:5/0 = 0
 3:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 3:4/0 = 0
+3:3/0 = 0
+3:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+4:3/0 = 0
+4:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+4:3/0/custom_data_0 = true
+3:2/0 = 0
+4:2/0 = 0
+4:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+4:2/0/custom_data_0 = true
+5:2/0 = 0
+5:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+5:2/0/custom_data_0 = true
 
 [resource]
 tile_size = Vector2i(32, 32)
@@ -102,4 +114,6 @@ terrain_set_0/terrain_0/name = "walls"
 terrain_set_0/terrain_0/color = Color(1, 1, 1, 1)
 terrain_set_0/terrain_1/name = "tr2"
 terrain_set_0/terrain_1/color = Color(0.761164, 5.08261e-05, 0.590937, 1)
+custom_data_layer_0/name = "broken_bridge"
+custom_data_layer_0/type = 1
 sources/0 = SubResource("TileSetAtlasSource_faqya")

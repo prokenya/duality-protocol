@@ -13,7 +13,7 @@ config_version=5
 config/name="Duality Protocol"
 run/main_scene="uid://betepf3ce3px4"
 config/features=PackedStringArray("4.4", "GL Compatibility")
-config/icon="res://icon.svg"
+config/icon="uid://bydiwsqyc3b7h"
 
 [autoload]
 
@@ -98,7 +98,7 @@ lmb={
 
 [player2]
 
-client_id="0198ec84-8665-7b1c-8318-7b20b376119c"
+client_id="01991b5c-ff01-78f9-bfcc-90a16ab9e2d6"
 
 [rendering]
 

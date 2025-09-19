@@ -2,7 +2,7 @@ class_name Data
 extends Resource
 
 @export_range(0, 1, .01) var sfx: float = 0.25
-@export_range(0, 1, .01) var music: float = 0.25
+@export_range(0, 1, .01) var music: float = 0.05
 
 @export var first_run:bool = true
 

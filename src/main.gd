@@ -1,14 +1,15 @@
 extends Node
 class_name Main
 
-@export var main_menu:PackedScene
 @export var worlds:Array[PackedScene]
 @export var world:Node
 
 @export var MainProgram:Player2AINPC
 @export var duality_protocol_status:bool = false
-
+	
 @export var player:Player
+
+@export var ui:UI
 func  _ready() -> void:
 	G.main = self
 	if G.data.first_run:

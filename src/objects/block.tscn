@@ -1,7 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://heenh3uu2q5n"]
+[gd_scene load_steps=6 format=3 uid="uid://heenh3uu2q5n"]
 
 [ext_resource type="Script" uid="uid://dtgsp16rpenqn" path="res://src/objects/block.gd" id="1_4n2vt"]
 [ext_resource type="Texture2D" uid="uid://bys7o4jlvca51" path="res://assets/sprites/blockt.png" id="1_ta7hf"]
+[ext_resource type="AudioStream" uid="uid://w74j5tsxpv0v" path="res://assets/audio/sfx/magnet_block_start.wav" id="3_6fbef"]
+[ext_resource type="AudioStream" uid="uid://ctmngebxbouxp" path="res://assets/audio/sfx/magnet_blovk_end.wav" id="4_bxvw3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d28yv"]
 size = Vector2(32, 32)
@@ -20,5 +22,13 @@ target_position = Vector2(0, 32)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_ta7hf")
+
+[node name="start" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_6fbef")
+bus = &"sfx"
+
+[node name="end" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_bxvw3")
+bus = &"sfx"
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]

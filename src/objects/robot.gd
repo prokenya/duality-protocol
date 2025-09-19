@@ -4,7 +4,6 @@ extends GridMovementBody
 @export var anim_sprite: AnimatedSprite2D
 @export var console:Console
 @export var agent:Player2AINPC
-@export var ask_notification_array:Array[String]
 @export var path_program: Array[Vector2]
 var current_anim_name: String
 var in_conversation:bool = false
@@ -23,6 +22,7 @@ func start_path():
 			await get_tree().create_timer(2).timeout
 
 func _physics_process(delta: float) -> void:
+	if next_tile_cords == G.main.player.next_tile_cords:return
 	super(delta)
 	process_animation(direction)
 

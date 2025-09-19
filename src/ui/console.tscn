@@ -1,10 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://b5ik00kf5k75r"]
+[gd_scene load_steps=7 format=3 uid="uid://b5ik00kf5k75r"]
 
 [ext_resource type="Theme" uid="uid://oe7fmx36qecf" path="res://src/ui/theme.tres" id="1_dyihf"]
 [ext_resource type="Script" uid="uid://dfb7e2p4q6fdn" path="res://src/ui/console_with_agent.gd" id="2_itxkh"]
 [ext_resource type="Texture2D" uid="uid://b5mhwpew1hhbx" path="res://assets/sprites/X.png" id="3_itxkh"]
+[ext_resource type="AudioStream" uid="uid://76d3f5tyf58a" path="res://assets/audio/sfx/X.wav" id="4_vc4yi"]
+[ext_resource type="AudioStream" uid="uid://chbjmapskni4k" path="res://assets/audio/sfx/click.wav" id="5_klyli"]
+[ext_resource type="AudioStream" uid="uid://75u5uyhc3chh" path="res://assets/audio/sfx/Enter.wav" id="6_h4dij"]
 
-[node name="console" type="Control" node_paths=PackedStringArray("exit_button", "rich_text", "edit", "shell_prompt_label")]
+[node name="console" type="Control" node_paths=PackedStringArray("exit_button", "rich_text", "edit", "shell_prompt_label", "close_window")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -17,6 +20,7 @@ exit_button = NodePath("ColorRect/VBoxContainer/panel/HBoxContainer/exit")
 rich_text = NodePath("ColorRect/VBoxContainer/RichTextLabel")
 edit = NodePath("ColorRect/VBoxContainer/HBoxContainer/LineEdit")
 shell_prompt_label = NodePath("ColorRect/VBoxContainer/HBoxContainer/shell prompt")
+close_window = NodePath("AudioStreamPlayer")
 metadata/_custom_type_script = "uid://c7aiql8035it4"
 
 [node name="ColorRect" type="ColorRect" parent="."]
@@ -66,8 +70,19 @@ text = "user@aos: ~$ "
 [node name="LineEdit" type="LineEdit" parent="ColorRect/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-placeholder_text = ">"
+placeholder_text = "> ask"
 keep_editing_on_text_submit = true
 flat = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_vc4yi")
+bus = &"sfx"
+
+[node name="pushed_sound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_klyli")
+
+[node name="enter" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_h4dij")
+bus = &"sfx"
 
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]

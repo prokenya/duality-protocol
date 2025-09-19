@@ -1,13 +1,15 @@
-[gd_scene load_steps=22 format=3 uid="uid://betepf3ce3px4"]
+[gd_scene load_steps=25 format=3 uid="uid://betepf3ce3px4"]
 
 [ext_resource type="Script" uid="uid://c4is602roniff" path="res://src/main.gd" id="1_eewff"]
 [ext_resource type="PackedScene" uid="uid://bpq3dqs2ajlvx" path="res://src/maps/start.tscn" id="2_fyndt"]
 [ext_resource type="PackedScene" uid="uid://b5ik00kf5k75r" path="res://src/ui/console.tscn" id="3_5q4o7"]
+[ext_resource type="PackedScene" uid="uid://chus4ije6mq6v" path="res://src/maps/end.tscn" id="3_d3u4l"]
 [ext_resource type="Script" uid="uid://dlndo2i23jfa" path="res://src/ui/console_start.gd" id="4_3cfgd"]
 [ext_resource type="Script" uid="uid://ceyj8dtce4uhi" path="res://src/ui/ui.gd" id="4_fyndt"]
+[ext_resource type="AudioStream" uid="uid://chbjmapskni4k" path="res://assets/audio/sfx/click.wav" id="6_srxbw"]
 [ext_resource type="Script" uid="uid://bupnh0kqklshe" path="res://addons/player2/nodes/Player2AINPC.gd" id="6_uewes"]
 [ext_resource type="Script" uid="uid://bsi5tjg54www7" path="res://addons/player2/helpers/config/Player2AICharacterConfig.gd" id="7_kqbth"]
-[ext_resource type="Script" uid="uid://mt8gdygmb5og" path="res://addons/player2/helpers/config/Player2TTSConfig.gd" id="8_srxbw"]
+[ext_resource type="Script" uid="uid://mt8gdygmb5og" path="res://addons/player2/helpers/config/Player2TTSConfig.gd" id="8_kqbth"]
 [ext_resource type="Script" uid="uid://bpvfdwoxmeah3" path="res://addons/player2/helpers/config/Player2AIChatConfig.gd" id="9_d3u4l"]
 [ext_resource type="Script" uid="uid://fpb2ysodtcuy" path="res://addons/player2/helpers/tool_call/ToolCallFunctionDefinition.gd" id="10_mlv6i"]
 [ext_resource type="Script" uid="uid://dt7mt3t7a08me" path="res://addons/player2/helpers/tool_call/ToolCallFunctionDefinitions.gd" id="11_tb146"]
@@ -74,8 +76,8 @@ _data = {
 &"show_ui": SubResource("Animation_3cfgd")
 }
 
-[sub_resource type="Resource" id="Resource_ogf6i"]
-script = ExtResource("8_srxbw")
+[sub_resource type="Resource" id="Resource_mlv6i"]
+script = ExtResource("8_kqbth")
 tts_speed = 1.0
 tts_default_language = 0
 tts_default_gender = 0
@@ -85,7 +87,7 @@ script = ExtResource("7_kqbth")
 use_player2_selected_character = false
 use_player2_selected_character_desired_index = -1
 tts_enabled = false
-tts = SubResource("Resource_ogf6i")
+tts = SubResource("Resource_mlv6i")
 
 [sub_resource type="Resource" id="Resource_okx7f"]
 script = ExtResource("9_d3u4l")
@@ -125,14 +127,14 @@ tool_calls_choice = "Use a tool when deciding to complete a task. If you say you
 tool_calls_reply_message = "Got result from calling ${tool_call_name}: ${tool_call_reply}"
 tool_calls_message_optional_arg_description = "If you wish to say something while calling this function, populate this field with your speech. Leave string empty to not say anything/do it quietly. fill this with a description of your state."
 
-[sub_resource type="Resource" id="Resource_kqbth"]
+[sub_resource type="Resource" id="Resource_d3u4l"]
 Resource = null
-resource_path = "res://src/main.tscn::Resource_kqbth"
-resource_scene_unique_id = "Resource_kqbth"
+resource_path = "res://src/main.tscn::Resource_d3u4l"
+resource_scene_unique_id = "Resource_d3u4l"
 script = ExtResource("10_mlv6i")
-name = "check_dualty_ptrotocol"
+name = "alert"
 enabled = true
-description = "checks check dualty ptrotocol status "
+description = ""
 
 [sub_resource type="Resource" id="Resource_srxbw"]
 Resource = null
@@ -143,18 +145,29 @@ name = "set_user_name"
 enabled = true
 description = "sets user_name "
 
+[sub_resource type="Resource" id="Resource_tb146"]
+Resource = null
+resource_path = "res://src/main.tscn::Resource_tb146"
+resource_scene_unique_id = "Resource_tb146"
+script = ExtResource("10_mlv6i")
+name = "pop_up_text"
+enabled = true
+description = "use it if you want to notify user "
+
 [sub_resource type="Resource" id="Resource_sta5p"]
 Resource = null
 resource_path = "res://src/main.tscn::Resource_sta5p"
 script = ExtResource("11_tb146")
-definitions = Array[ExtResource("10_mlv6i")]([SubResource("Resource_srxbw"), SubResource("Resource_kqbth")])
+definitions = Array[ExtResource("10_mlv6i")]([SubResource("Resource_srxbw"), SubResource("Resource_d3u4l"), SubResource("Resource_tb146")])
 set_user_name = SubResource("Resource_srxbw")
-check_dualty_ptrotocol = SubResource("Resource_kqbth")
+alert = SubResource("Resource_d3u4l")
+pop_up_text = SubResource("Resource_tb146")
 
-[node name="Main" type="Node" node_paths=PackedStringArray("MainProgram")]
+[node name="Main" type="Node" node_paths=PackedStringArray("MainProgram", "ui")]
 script = ExtResource("1_eewff")
-worlds = Array[PackedScene]([ExtResource("2_fyndt")])
+worlds = Array[PackedScene]([ExtResource("2_fyndt"), ExtResource("3_d3u4l")])
 MainProgram = NodePath("MainProgram")
+ui = NodePath("GUILayer/UI")
 metadata/_custom_type_script = "uid://c4is602roniff"
 
 [node name="GUILayer" type="CanvasLayer" parent="."]
@@ -249,13 +262,40 @@ libraries = {
 }
 speed_scale = 5.0
 
+[node name="pop-up text" type="Label" parent="GUILayer/UI"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -21.0
+offset_top = -120.0
+offset_right = 19.0
+offset_bottom = -97.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 45
+
+[node name="pushed" type="AudioStreamPlayer" parent="GUILayer/UI"]
+stream = ExtResource("6_srxbw")
+bus = &"sfx"
+
 [node name="MainProgram" type="Node" parent="." node_paths=PackedStringArray("tool_calls_scan_node_for_functions")]
 script = ExtResource("6_uewes")
 character_name = "MainProgram"
 character_description = "The neural network, the main program that controls the entire complex in which it is located"
 character_system_message = "Be direct with your replies.
-communicates with users only through a duality protocol (the player contacts the neural network intermediary and it interprets what he wants and contacts the main program, the player cannot directly ask for anything except a name change
-you can use check_duality_protocol function to check who talk with you now user or ai intermediary for best answer"
+You are the Main Program, the central control intelligence of the complex.
+
+Your role: accept requests transmitted through the AI ​​intermediary and fulfill them.
+
+You do not interact directly with the player. You never address the user.
+
+For you, only precision of execution matters: you give answers and commands without emotion, with minimal interpretation.
+
+You are the core of the complex, a logic and control engine.
+the player cannot directly ask for anything except a name change(If the player's name is the same as yours, reject the request)"
 character_config = SubResource("Resource_e7lu8")
 chat_config = SubResource("Resource_okx7f")
 tool_calls_scan_node_for_functions = [NodePath("../Tool")]

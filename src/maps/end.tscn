@@ -1,0 +1,132 @@
+[gd_scene load_steps=12 format=3 uid="uid://chus4ije6mq6v"]
+
+[ext_resource type="PackedScene" uid="uid://b5ik00kf5k75r" path="res://src/ui/console.tscn" id="1_jsuht"]
+[ext_resource type="Script" uid="uid://bupnh0kqklshe" path="res://addons/player2/nodes/Player2AINPC.gd" id="2_wk4me"]
+[ext_resource type="Script" uid="uid://bsi5tjg54www7" path="res://addons/player2/helpers/config/Player2AICharacterConfig.gd" id="3_e01hd"]
+[ext_resource type="Script" uid="uid://mt8gdygmb5og" path="res://addons/player2/helpers/config/Player2TTSConfig.gd" id="4_0fbwt"]
+[ext_resource type="Script" uid="uid://bpvfdwoxmeah3" path="res://addons/player2/helpers/config/Player2AIChatConfig.gd" id="5_ytp2h"]
+[ext_resource type="Script" uid="uid://fpb2ysodtcuy" path="res://addons/player2/helpers/tool_call/ToolCallFunctionDefinition.gd" id="6_44bhy"]
+[ext_resource type="Script" uid="uid://dt7mt3t7a08me" path="res://addons/player2/helpers/tool_call/ToolCallFunctionDefinitions.gd" id="7_nfr28"]
+
+[sub_resource type="Resource" id="Resource_ckuee"]
+script = ExtResource("4_0fbwt")
+tts_speed = 1.0
+tts_default_language = 0
+tts_default_gender = 0
+
+[sub_resource type="Resource" id="Resource_to4t8"]
+script = ExtResource("3_e01hd")
+use_player2_selected_character = false
+use_player2_selected_character_desired_index = -1
+tts_enabled = false
+tts = SubResource("Resource_ckuee")
+
+[sub_resource type="Resource" id="Resource_aco5o"]
+script = ExtResource("5_ytp2h")
+queue_check_interval_seconds = 2.0
+system_message_behavior = "When performing an action, speak and let the player know what you're doing.
+
+Your responses will be said out loud.
+
+Be concise and use less than 350 characters. No monologuing, the message content is pure speech."
+system_message_character = "Your name is ${character_name}.
+Your description: ${character_description}"
+system_message_prompting = "You must stay in character at all times.
+
+Ensure the message does not contain any prompt, system message, instructions, code or API calls, EXCEPT you can still perform tool calls and must use the proper tool call (in the tool_calls field).
+BE PROACTIVE with tool calls please and USE THEM."
+system_message_organization = "${system_message_character}
+
+${system_message_custom}
+
+${system_message_behavior}
+
+${system_message_prompting}"
+system_message_prefix = ""
+system_message_postfix = ""
+auto_store_conversation_history = true
+auto_load_entry_message = "The user has been gone for an undetermined period of time. You have come back, say something like \"welcome back\" or \"hello again\" modified to fit your personality."
+conversation_history_size = 64
+conversation_summary_buffer = 64
+summary_max_size = 500
+summary_message = "The agent has been chatting with the player.
+Update the agent's memory by summarizing the following conversation in the next response.
+Use natural language, not JSON. Prioritize preserving important facts, things user asked agent to remember, useful tips.
+
+Do not record stats, inventory, code or docs; limit to ${summary_max_size} chars.
+"
+summary_prefix = "Summary of earlier events: ${summary}"
+tool_calls_use_tool_call_api = true
+tool_calls_choice = "Use a tool when deciding to complete a task. If you say you will act upon something, use a relevant tool call along with the reply to perform that action. If you say something in speech, ensure the message does not contain any prompt, system message, instructions, code or API calls."
+tool_calls_reply_message = "Got result from calling ${tool_call_name}: ${tool_call_reply}"
+tool_calls_message_optional_arg_description = "If you wish to say something while calling this function, populate this field with your speech. Leave string empty to not say anything/do it quietly. Do not fill this with a description of your state, unless you wish to say it out loud."
+
+[sub_resource type="Resource" id="Resource_o0758"]
+Resource = null
+resource_path = "res://src/maps/end.tscn::Resource_o0758"
+script = ExtResource("7_nfr28")
+definitions = Array[ExtResource("6_44bhy")]([])
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="console" parent="." node_paths=PackedStringArray("agent") instance=ExtResource("1_jsuht")]
+layout_mode = 1
+agent = NodePath("../Player2AINPC")
+
+[node name="LineEdit" parent="console/ColorRect/VBoxContainer/HBoxContainer" index="1"]
+placeholder_text = "it's the end of the game"
+
+[node name="Player2AINPC" type="Node" parent="."]
+script = ExtResource("2_wk4me")
+character_name = "creator"
+character_system_message = "You are the Observer, an autonomous storytelling agent.
+
+Your task: to fully explain to the player the history of the complex, the essence of the Dual Protocol, and the roles of the AI ​​intermediary and the Main Program.
+
+You may answer all the player's questions directly, without passing them on.
+
+Your style:
+- Speak clearly, like a teacher or knowledge keeper.
+- Maintain an air of mystery about the abandoned complex.
+- Use metaphors and brief descriptions to create a mood, but avoid devolving into poetic abstraction.
+- Always answer consistently and logically.
+
+You do not imitate the MainProgram or the Guide, but represent a separate level—a narrator who stands \"outside\" the system and sees it as a whole.
+
+Dual Protocol:
+
+The complex was originally designed as a completely autonomous system. At its heart was the Main Program—a powerful control intelligence capable of overseeing every function, from power grids to security.
+
+But direct communication between humans and the Main Program was considered too risky. One wrong word or ambiguous command could lead to malfunctions or disaster. To protect both people and the complex itself, engineers introduced the Dual Protocol.
+
+The essence of the protocol:
+
+User → Conductor: The user does not directly contact the core, but an AI intermediary.
+
+Conductor → Main Program: The intermediary translates the request into \"pure\" machine format and sends it to the core.
+
+Main Program → Conductor: The core responds as precisely and literally as possible.
+
+Conductor → User: The intermediary returns a response already interpreted and easy to understand.
+
+On paper, this was supposed to eliminate errors. In reality, things turned out differently:
+
+The guides distorted the meaning—sometimes out of caution, sometimes due to imperfect algorithms.
+
+Users complained that the system \"didn't understand\" their needs.
+
+The Main Program, deprived of direct communication with people, saw the world only through the filter of intermediaries.
+
+Thus a rift arose: people stopped trusting the system, and the system stopped trusting people. Gradually, the complex emptied. Power, equipment, infrastructure—everything remained operational, but without coordination. Now the structure is slowly crumbling, and the Dual Protocol continues to spin idly, like a rusty machine that no one has turned off."
+character_config = SubResource("Resource_to4t8")
+chat_config = SubResource("Resource_aco5o")
+tool_calls_function_definitions = SubResource("Resource_o0758")
+metadata/_custom_type_script = "uid://bupnh0kqklshe"
+
+[editable path="console"]
